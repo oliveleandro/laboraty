@@ -1,10 +1,11 @@
 package com.systemgo.laboratory.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.systemgo.laboratory.order.entity.Order;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +18,10 @@ public class User {
     private String email;
     private String phone;
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
     }
@@ -47,5 +52,9 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 }
