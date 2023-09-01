@@ -1,10 +1,10 @@
 package com.systemgo.laboratory.category.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.systemgo.laboratory.product.entity.Product;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 @Entity
 @Table(name = "tb_category")
@@ -14,6 +14,9 @@ public class Category {
     @GeneratedValue
     private UUID categoryId;
     private String name;
+
+    @Transient
+    private Set<Product> products = new HashSet<>();
 
     public Category(){
     }
@@ -29,5 +32,9 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 }
