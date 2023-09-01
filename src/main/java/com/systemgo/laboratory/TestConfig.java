@@ -1,5 +1,7 @@
 package com.systemgo.laboratory;
 
+import com.systemgo.laboratory.category.CategoryRepository;
+import com.systemgo.laboratory.category.entity.Category;
 import com.systemgo.laboratory.order.OrderRepository;
 import com.systemgo.laboratory.order.entity.Order;
 import com.systemgo.laboratory.order.enums.OrderStatus;
@@ -12,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.UUID;
 
 @Configuration
 @Profile("test")
@@ -24,8 +25,18 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+
         User u1 = new User(
                 null,
                 "Maria Brown",
