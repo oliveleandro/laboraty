@@ -1,10 +1,13 @@
 package com.systemgo.laboratory.order.entity;
 
 import com.systemgo.laboratory.order.enums.OrderStatus;
+import com.systemgo.laboratory.orderProduct.entity.OrderProduct;
 import com.systemgo.laboratory.user.entity.User;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +23,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "orderProductPk.order")
+    private Set<OrderProduct> items = new HashSet<>();
 
     public Order(){
     }
@@ -51,5 +57,9 @@ public class Order {
 
     public User getClient() {
         return client;
+    }
+
+    public Set<OrderProduct> getItems() {
+        return items;
     }
 }

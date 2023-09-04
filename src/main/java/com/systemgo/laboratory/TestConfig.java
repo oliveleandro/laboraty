@@ -5,6 +5,8 @@ import com.systemgo.laboratory.category.entity.Category;
 import com.systemgo.laboratory.order.OrderRepository;
 import com.systemgo.laboratory.order.entity.Order;
 import com.systemgo.laboratory.order.enums.OrderStatus;
+import com.systemgo.laboratory.orderProduct.OrderProductRepository;
+import com.systemgo.laboratory.orderProduct.entity.OrderProduct;
 import com.systemgo.laboratory.product.ProductRepository;
 import com.systemgo.laboratory.product.entity.Product;
 import com.systemgo.laboratory.user.UserRepository;
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -68,5 +73,12 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderProduct op1 = new OrderProduct(o1, p1, 2, p1.getPrice());
+        OrderProduct op2 = new OrderProduct(o1, p3, 1, p3.getPrice());
+        OrderProduct op3 = new OrderProduct(o2, p3, 2, p3.getPrice());
+        OrderProduct op4 = new OrderProduct(o3, p5, 2, p5.getPrice());
+
+        orderProductRepository.saveAll(Arrays.asList(op1, op2, op3, op4));
     }
 }
