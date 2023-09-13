@@ -1,6 +1,9 @@
 package com.systemgo.laboratory.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.systemgo.laboratory.category.entity.Category;
+import com.systemgo.laboratory.order.entity.Order;
+import com.systemgo.laboratory.orderProduct.entity.OrderProduct;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,6 +25,9 @@ public class Product {
     // Utilizado o Set pois não pode haver um produto com mais de uma categoria
     @Transient
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "orderProductPk.product")
+    private Set<OrderProduct> items = new HashSet<>();
 
     private Product(){
     }
@@ -56,5 +62,14 @@ public class Product {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderProduct x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
     }
 }
