@@ -1,5 +1,6 @@
 package com.systemgo.laboratory.category.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.systemgo.laboratory.product.entity.Product;
 import jakarta.persistence.*;
 
@@ -15,7 +16,8 @@ public class Category {
     private UUID categoryId;
     private String name;
 
-    @Transient
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category(){

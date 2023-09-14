@@ -23,7 +23,10 @@ public class Product {
     private String imgUrl;
 
     // Utilizado o Set pois não pode haver um produto com mais de uma categoria
-    @Transient
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "orderProductPk.product")
