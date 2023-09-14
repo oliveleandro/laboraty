@@ -1,5 +1,6 @@
 package com.systemgo.laboratory.payment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.systemgo.laboratory.order.entity.Order;
 import jakarta.persistence.*;
 
@@ -14,6 +15,7 @@ public class Payment {
     @GeneratedValue
     private UUID paymentId;
     private Instant moment;
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Order order;
