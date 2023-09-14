@@ -2,6 +2,7 @@ package com.systemgo.laboratory.order.entity;
 
 import com.systemgo.laboratory.order.enums.OrderStatus;
 import com.systemgo.laboratory.orderProduct.entity.OrderProduct;
+import com.systemgo.laboratory.payment.entity.Payment;
 import com.systemgo.laboratory.user.entity.User;
 import jakarta.persistence.*;
 
@@ -26,6 +27,9 @@ public class Order {
 
     @OneToMany(mappedBy = "orderProductPk.order")
     private Set<OrderProduct> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order(){
     }
@@ -57,6 +61,14 @@ public class Order {
 
     public User getClient() {
         return client;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Set<OrderProduct> getItems() {
