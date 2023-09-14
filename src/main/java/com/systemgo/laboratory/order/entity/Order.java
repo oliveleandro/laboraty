@@ -62,4 +62,12 @@ public class Order {
     public Set<OrderProduct> getItems() {
         return items;
     }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderProduct x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
 }
