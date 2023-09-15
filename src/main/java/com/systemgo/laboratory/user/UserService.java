@@ -3,6 +3,7 @@ package com.systemgo.laboratory.user;
 import com.systemgo.laboratory.exceptions.DatabaseException;
 import com.systemgo.laboratory.exceptions.ResourceNotFoundException;
 import com.systemgo.laboratory.user.entity.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,9 +42,13 @@ public class UserService {
     }
 
     public User update(UUID id, User user) {
-        User entity = repository.getReferenceById(id);
-        updateData(entity, user);
-        return repository.save(entity);
+        try {
+            User entity = repository.getReferenceById(id);
+            updateData(entity, user);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User user) {
